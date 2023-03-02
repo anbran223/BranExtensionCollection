@@ -1,0 +1,52 @@
+package com.brandon.yo;
+
+import android.app.Activity;
+import android.content.Context;
+import com.google.appinventor.components.annotations.*;
+import com.google.appinventor.components.common.ComponentCategory;
+import com.google.appinventor.components.runtime.AndroidNonvisibleComponent;
+import com.google.appinventor.components.runtime.ComponentContainer;
+import com.google.appinventor.components.runtime.EventDispatcher;
+import android.widget.Toast;
+import com.google.appinventor.components.runtime.errors.YailRuntimeError; 
+
+@DesignerComponent(
+        version = 1,
+        description = "",
+        category = ComponentCategory.EXTENSION,
+        nonVisible = true,
+        iconName = "https://allmyassets.files.wordpress.com/2023/03/pixil-frame-0.png")
+
+@SimpleObject(external = true)
+//Libraries
+@UsesLibraries(libraries = "")
+//Permissions
+@UsesPermissions(permissionNames = "")
+
+public class Yo extends AndroidNonvisibleComponent {
+
+    //Activity and Context
+    private Context context;
+    private Activity activity;
+
+    public Yo(ComponentContainer container){
+        super(container.$form());
+        this.activity = container.$context();
+        this.context = container.$context();
+    }
+
+    @SimpleFunction(description = "Display a Yo greeting")
+    public void sayYo(String name) {
+        if (name.equals("")) {
+            throw new YailRuntimeError("Name cannot be empty", "YoGreeting");
+        } else {
+            String message = "Yo " + name + "!";
+            Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @SimpleProperty(description = "The default name to greet")
+    public String DefaultName() {
+        return "World";
+    }
+}
